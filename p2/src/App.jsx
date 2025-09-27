@@ -1,34 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  // flashcards
+  const flashcardsLst = [ // CHANGE
+    { index: 1, question: "What is React?", answer: "A JavaScript library for building user interfaces." },
+    { index: 2, question: "What is a component?", answer: "A reusable piece of UI." },
+    { index: 3, question: "What is useState?", answer: "A Hook to add state to function components." }
+  ]
+
+  // useStates
+  const [currFlashcardIndex, setFlashcard] = useState(0);
+  const [clicked, setFlip] = useState(false);
+
+  // handling the next button for flashcards
+  const handleNext = () => {
+    setFlashcard(currFlashcardIndex + 1)
+  }
+  const currFlashcard = flashcardsLst[currFlashcardIndex]; // setting the current flashcard set
+
+  // checking if the flashcard is flipped or not
+  const checkIfFlipped = () => {
+    setFlip(prev => !prev)
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      {/* -------- the header -------- */}
+      <div className="header">
+        <h1>Guess The Movie</h1>
+        <p>Level: poor descriptions! Guess what movie it is based on some funky, vague (but still valid!) movie descriptions.</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+      {/* -------- content -------- */}
+      {/* from w3schools */}
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          {/* FRONT OF CARD */}
+          <div class="flashcard-front">
+            <p>{currFlashcard.question}</p>
+          </div>
+
+          {/* BACK OF CARD */}
+          <div class="flashcard-back">
+            <p>{currFlashcard.answer}</p>
+          </div>
+        </div>
+        <button onClick={handleNext}> Next </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+
+
+
+
+      {/* -------- footer -------- */}
+      <div className="footer">
+        <p>Trivia and description credits go to: https://www.sideshow.com/blog/can-you-guess-these-movies-from-misleading-plot-descriptions</p>
+      </div>
+
+    </div>
   )
 }
 
