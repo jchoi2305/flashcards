@@ -11,17 +11,30 @@ const App = () => {
 
   // useStates
   const [currFlashcardIndex, setFlashcard] = useState(0);
-  const [clicked, setFlip] = useState(false);
+  const [showAnswer, setFlip] = useState(false);
 
   // handling the next button for flashcards
   const handleNext = () => {
     setFlashcard(currFlashcardIndex + 1)
+    setFlip(false)
   }
   const currFlashcard = flashcardsLst[currFlashcardIndex]; // setting the current flashcard set
 
   // checking if the flashcard is flipped or not
   const checkIfFlipped = () => {
-    setFlip(prev => !prev)
+    setFlip(true) // !prev
+  }
+
+  const flashcardState = ({ currCard, isFlipped }) => {
+    return (
+      <p className='content'>
+        {isFlipped ? (
+          currCard.question
+        ) : (
+          currCard.answer
+        )}
+      </p>
+    );
   }
 
   return (
@@ -34,24 +47,17 @@ const App = () => {
 
       {/* -------- content -------- */}
       {/* from w3schools */}
-      <div class="flashcard">
+      <div class="flashcard" onClick={checkIfFlipped}>
         <div class="flashcard-inner">
           {/* FRONT OF CARD */}
           <div class="flashcard-front">
-            <p>{currFlashcard.question}</p>
+            {/* <p>{currFlashcard.question}</p> */}
+            {flashcardState({ currCard: currFlashcard, isFlipped: showAnswer })}
           </div>
 
-          {/* BACK OF CARD */}
-          <div class="flashcard-back">
-            <p>{currFlashcard.answer}</p>
-          </div>
         </div>
         <button onClick={handleNext}> Next </button>
       </div>
-
-
-
-
 
       {/* -------- footer -------- */}
       <div className="footer">
